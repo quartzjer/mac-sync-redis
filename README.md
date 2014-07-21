@@ -1,15 +1,14 @@
-mac-lookup
+mac-sync-redis
 ====================
 
-A [node](http://nodejs.org)  module to fetch, parse, and lookup entries from the IEEE's OUI database. Adapted from [node-ieee-oui-lookup](https://github.com/mrose17/node-ieee-oui-lookup).
-
+A [node](http://nodejs.org) module to fetch, parse, and sync entries from the IEEE's OUI database to redis. Adapted from [mac-lookup](https://github.com/ivan-loh/mac-lookup) which is sqlite based, and was [node-ieee-oui-lookup](https://github.com/mrose17/node-ieee-oui-lookup) originally.
 
 
 Install
 -------
 
 ```js
-npm install mac-lookup
+npm install mac-sync-redis
 ```
 
 
@@ -18,22 +17,14 @@ Usage
 -----
 
 ```js
-var mac = require('mac-lookup');
+var mac = require('mac-sync-redis');
 ```
 
-To lookup a MAC prefix:
+To start a sync with the [OUI source](http://standards.ieee.org/develop/regauth/oui/oui.txt), pass a connected redis client:
 ```js
-mac.lookup('00:00:00', function (err, name) {
+mac.sync(redisClient, function (err, syncing) {
   if (err) throw err;
-  // name will be null if not found.
-  console.log('00:00:00 -> ' + name);
-});
-```
-
-If you think the internal DB is outdated, you can rebuild it from the latest [file](http://standards.ieee.org/develop/regauth/oui/oui.txt) with:
-```js
-mac.rebuild(function (err) {
-  if (err) throw err;
-  console.log('rebuild completed');
+  if (syncing) console.log("re-syncing in the background");
+  else console.log("data is in sync already");
 });
 ```
