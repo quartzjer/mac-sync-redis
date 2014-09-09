@@ -1,6 +1,6 @@
 {
   "name": "mac-sync-redis",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "mac address manufacturer redis sync tool for [node](http://nodejs.org).",
   "author": "Jeremie Miller",
   "main": "index.js",
