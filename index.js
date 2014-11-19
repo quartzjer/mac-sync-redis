@@ -61,7 +61,7 @@ exports.sync = function(redis, cb) {
 
         // syncing began
         cb(null,true);
-        redis.hset("oui","etag",etag);
+        if(etag) { redis.hset("oui","etag",etag); }
         
         // stream of lines
         byline(res).on("data",doline);
